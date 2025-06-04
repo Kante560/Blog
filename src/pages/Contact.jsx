@@ -1,6 +1,6 @@
 import React from "react";
-import { Mail, Phone, MapPin, Clock, ArrowRight,  } from "lucide-react";
-import { div } from "framer-motion/client";
+import { Mail, Phone, MapPin, Clock,  } from "lucide-react";
+
 
 export const Contact = () => {
   return (
