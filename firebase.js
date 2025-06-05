@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
+import { Timestamp, getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,4 +23,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+
+
+const blogPost = {
+  title: "Blog title",
+  content: "Full blog content here...",
+  authorId: "userUID",
+  authorEmail: "user@example.com",
+  createdAt: Timestamp.now()
+};
+
 export const auth = getAuth(app);
+
+export const db = getFirestore(app);
+
