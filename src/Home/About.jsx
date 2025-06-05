@@ -10,7 +10,7 @@ export const About = () => {
   return (
     <>
     <Nav />
-      <div className="flex justify-center items-center  w-full  mt-4 bg-white">
+      <div className="flex justify-center items-center  w-full  mt-8 bg-white">
         <div className="text-center max-w-[50rem] flex justify-center items-center flex-col mt-10 mb-6">
           <h1 className=" font-bold text-gray-800 mb-6 ">
             <span className="text-4xl font-bold text-gray-800 ">About</span>
