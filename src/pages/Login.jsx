@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useAuth} from "../Context/AuthContext"
 import { Nav } from "../Home/Nav";
 
@@ -9,6 +9,9 @@ const Login = () => {
 const { login } =  useAuth()
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
+const navigate = useNavigate();
+
+
 
 
 const handleLogin = async (e) => {
@@ -16,7 +19,9 @@ e.preventDefault();
 
 try {
   await login(email, password);
-  alert("welcome back to SayNaira")
+  alert("welcome back to SayNaira");
+    navigate("/");
+
   
 } catch (err) {
 
