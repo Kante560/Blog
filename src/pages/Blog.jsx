@@ -174,14 +174,14 @@ export const Blog = () => {
                 <form onSubmit={handlePostSubmit}>
                   <input
                     type="text"
-                    placeholder="Post Title"
+                    placeholder="Post Title<>"
                     className="w-full mb-3 p-2 border focus:outline-none focus:shadow-sm focus:shadow-green-600 rounded"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
 
                   <textarea
-                    placeholder="Post Content"
+                    placeholder="Post Content..."
                     className="w-full mb-4 p-2 border focus:outline-none focus:shadow-sm focus:shadow-green-600 rounded min-h-[120px]"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}

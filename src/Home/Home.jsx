@@ -31,9 +31,7 @@ const Home = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        // className="text-center max-w-2xl px-4"
-        // Remove duplicate 'class' attribute, use only className
-        // class=" w-full h-100vh bg-gradient-to-br from-green-50 via-white mt-4 to-green-50 py-20 "
+    
         className="w-full min-h-screen mt-4 py-20 relative"
       >
         <div className="absolute hidden md:flex rounded-[50%] h-20 w-20 bg-green-100 left-[840px] top-[420px] "></div>
@@ -51,7 +49,10 @@ const Home = () => {
               every naira invested works harder for your business.
             </p>
 
-            <div className="mt-8 flex gap-4">
+            <div className="mt-8 flex gap-4 items-center">
+              <Link
+              to="/marketing"
+              >
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -59,12 +60,17 @@ const Home = () => {
               >
                 Start Your Journey
               </motion.button>
+              </Link>  
+              <Link
+              to="/marketing"
+              >
               <a
                 href="#"
                 className="border border-green-600 text-green-600 px-6 py-3 rounded-md text-sm font-semibold hover:bg-green-50"
               >
                 View Our Work
               </a>
+              </Link>
             </div>
 
             <div className="mt-12 grid grid-cols-3 gap-6 text-center">
