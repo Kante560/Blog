@@ -17,7 +17,7 @@ const Home = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         style={{
           background:
-            "linear-gradient(120deg, #d1fae5 0%, #fff 50%, #d1fae5 100%)",
+            "linear-gradient(120deg, #bbf7d0 0%, #fff 50%, #bbf7d0 100%)",
           backgroundSize: "200% 200%",
           width: "100%",
           minHeight: "100vh",
