@@ -5,8 +5,8 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth, db } from "../../firebase"; // ✅ Make sure this is correct
-import { doc, setDoc } from "firebase/firestore"; // ✅ For Firestore updates
+import { auth, db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -24,10 +24,28 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     if (user) {
-      // ✅ Mark offline before logout
-      await setDoc(doc(db, "users", user.uid), { online: false }, { merge: true });
+      await setDoc(doc(db, "status", user.uid), { state: "offline" }, { merge: true });
     }
     return signOut(auth);
+  };
+
+  const setupPresenceTracking = async (currentUser) => {
+    const userStatusRef = doc(db, "status", currentUser.uid);
+
+    // Mark online immediately
+    await setDoc(userStatusRef, { state: "online", email: currentUser.email }, { merge: true });
+
+    // Handle when user closes tab or refreshes
+    const handleUnload = async () => {
+      await setDoc(userStatusRef, { state: "offline" }, { merge: true });
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+
+    return () => {
+      handleUnload();
+      window.removeEventListener("beforeunload", handleUnload);
+    };
   };
 
   useEffect(() => {
@@ -35,24 +53,13 @@ export const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
 
+      let cleanup;
+
       if (currentUser) {
-        const userRef = doc(db, "users", currentUser.uid);
-
-        // ✅ Mark as online
-        await setDoc(userRef, { online: true, email: currentUser.email }, { merge: true });
-
-        const handleUnload = async () => {
-          await setDoc(userRef, { online: false }, { merge: true });
-        };
-
-        // ✅ Handle tab close or refresh
-        window.addEventListener("beforeunload", handleUnload);
-
-        return () => {
-          handleUnload();
-          window.removeEventListener("beforeunload", handleUnload);
-        };
+        cleanup = await setupPresenceTracking(currentUser);
       }
+
+      return cleanup;
     });
 
     return () => unsubscribe();

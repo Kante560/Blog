@@ -62,7 +62,7 @@ export const Chat = () => {
     <Nav />
     <div className="p-4">
       {/* Messages */}
-      <div className="h-80 overflow-y-scroll border p-2 mb-2 bg-gray-100 rounded">
+      <div className="min-h-[85vh] overflow-y-scroll border p-2 mb-2 bg-gray-100 rounded mt-20">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -81,7 +81,7 @@ export const Chat = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type a message..."
-          className="flex-1 p-2 border rounded-l"
+          className="flex-1 sticky p-2 border rounded-l"
         />
         <button type="submit" className="bg-green-600 text-white px-4 rounded-r">
           Send

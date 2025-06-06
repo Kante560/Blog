@@ -7,22 +7,21 @@ import {
   query,
   orderBy,
   serverTimestamp,
+  onSnapshot,
 } from "firebase/firestore";
 import { useAuth } from "../Context/AuthContext";
 import { Nav } from "../Home/Nav";
 import { SearchBar } from "../_component_/SearchBar";
 import { Link } from "react-router-dom";
-import { onSnapshot } from "firebase/firestore";
 
 export const Blog = () => {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  const [userStatuses, setUserStatuses] = useState({});
+  const [onlineUsers, setOnlineUsers] = useState({});
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [onlineUsers, setOnlineUsers] = useState({});
   const [loading, setLoading] = useState(true);
 
   const fetchPosts = async () => {
@@ -37,32 +36,21 @@ export const Blog = () => {
     setLoading(false);
   };
 
+  // Fetch real-time online user status from Firestore
   useEffect(() => {
-  const unsubscribe = onSnapshot(collection(db, "status"), (snapshot) => {
-    const updatedStatus = {};
-    snapshot.forEach((doc) => {
-      updatedStatus[doc.id] = doc.data().state === "online";
+    const unsubscribe = onSnapshot(collection(db, "status"), (snapshot) => {
+      const updatedStatus = {};
+      snapshot.forEach((doc) => {
+        updatedStatus[doc.id] = doc.data().state === "online";
+      });
+      setOnlineUsers(updatedStatus);
     });
-    setOnlineUsers(updatedStatus);
-  });
 
-  return () => unsubscribe(); // Clean up listener on unmount
-}, []);
-
-  const fetchUserStatuses = async () => {
-    const usersSnapshot = await getDocs(collection(db, "users"));
-    const statusMap = {};
-    usersSnapshot.forEach((doc) => {
-      statusMap[doc.id] = doc.data().online;
-    });
-    setUserStatuses(statusMap);
-  };
+    return () => unsubscribe(); // Clean up listener on unmount
+  }, []);
 
   useEffect(() => {
     fetchPosts();
-    fetchUserStatuses();
-    const interval = setInterval(fetchUserStatuses, 30000);
-    return () => clearInterval(interval);
   }, []);
 
   const handlePostSubmit = async (e) => {
@@ -103,13 +91,8 @@ export const Blog = () => {
         <div className="bg-gradient-to-br from-green-100 via-white mt-4 to-green-50 w-full text-center flex items-center justify-center py-30 pb-40">
           <div className="text-center w-7xl flex items-center justify-center flex-col mb-10">
             <h1 className="font-bold text-gray-800 mb-2">
-              <span className="text-5xl font-bold text-gray-800">
-                Marketing
-              </span>
-              <span className="text-5xl font-bold text-green-600">
-                {" "}
-                Insights
-              </span>
+              <span className="text-5xl font-bold text-gray-800">Marketing</span>
+              <span className="text-5xl font-bold text-green-600"> Insights</span>
             </h1>
             <p className="text-gray-800 max-w-[50rem] text-[20px]">
               Expert insights, proven strategies, and actionable tips to
@@ -166,12 +149,12 @@ export const Blog = () => {
                       <span className="flex items-center gap-1">
                         <span
                           className={`w-2 h-2 rounded-full ${
-                            userStatuses[post.authorId]
+                            onlineUsers[post.authorId]
                               ? "bg-green-500"
                               : "bg-red-500"
                           }`}
                           title={
-                            userStatuses[post.authorId] ? "Online" : "Offline"
+                            onlineUsers[post.authorId] ? "Online" : "Offline"
                           }
                         ></span>
                         By {post.authorEmail}
@@ -182,17 +165,12 @@ export const Blog = () => {
                       </span>
                     </div>
 
-                    {post.authorId !== user.uid && (
+                    {post.authorId !== user?.uid && (
                       <Link
                         to={`/chat/${post.authorId}`}
-                        className={`mt-2 inline-block text-sm ${
-                          onlineUsers[post.authorId]
-                            ? "text-green-600"
-                            : "text-gray-400"
-                        } hover:underline`}
+                        className="mt-2 inline-block text-sm hover:underline"
                       >
                         Message Author 💬
-                        {onlineUsers[post.authorId] ? "🟢" : "🔴"}
                       </Link>
                     )}
                   </div>
