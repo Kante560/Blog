@@ -16,7 +16,8 @@ const Home = () => {
         animate={{ backgroundPosition: "100% 50%" }}
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         style={{
-          background: "linear-gradient(120deg, #d1fae5 0%, #fff 50%, #d1fae5 100%)",
+          background:
+            "linear-gradient(120deg, #d1fae5 0%, #fff 50%, #d1fae5 100%)",
           backgroundSize: "200% 200%",
           width: "100%",
           minHeight: "100vh",
@@ -31,7 +32,6 @@ const Home = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-    
         className="w-full min-h-screen mt-4 py-20 relative"
       >
         <div className="absolute hidden md:flex rounded-[50%] h-20 w-20 bg-green-100 left-[840px] top-[420px] "></div>
@@ -50,26 +50,22 @@ const Home = () => {
             </p>
 
             <div className="mt-8 flex gap-4 items-center">
-              <Link
-              to="/marketing"
-              >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md"
-              >
-                Start Your Journey
-              </motion.button>
-              </Link>  
-              <Link
-              to="/marketing"
-              >
-              <a
-                href="#"
-                className="border border-green-600 text-green-600 px-6 py-3 rounded-md text-sm font-semibold hover:bg-green-50"
-              >
-                View Our Work
-              </a>
+              <Link to="/marketing">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-green-600 text-white cursor:pointer px-6 py-3 rounded-lg font-semibold shadow-md"
+                >
+                  Start Your Journey
+                </motion.button>
+              </Link>x
+              <Link to="/marketing">
+                <a
+                  href="#"
+                  className="border border-green-600 text-green-600 px-6 py-3 rounded-md text-sm font-semibold hover:bg-green-50"
+                >
+                  View Our Work
+                </a>
               </Link>
             </div>
 
@@ -135,8 +131,12 @@ const Home = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-800">Targeted Campaigns</p>
-                  <p className="text-sm text-gray-500">Reach the right audience</p>
+                  <p className="font-semibold text-gray-800">
+                    Targeted Campaigns
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Reach the right audience
+                  </p>
                 </div>
               </div>
 
@@ -168,14 +168,13 @@ const Home = () => {
         </div>
       </motion.section>
       <motion.div
-       initial={{ opacity: 0, x: -100 }}
+        initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-
-      <Marketing />
-      <About />
-      <Footer />
+        <Marketing />
+        <About />
+        <Footer />
       </motion.div>
     </>
   );

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Nav = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate(); // <-- add this line
 
   // Auto-close on scroll
   useEffect(() => {
@@ -57,6 +58,20 @@ export const Nav = () => {
               >
                 Get Started
               </Link>
+            )}
+            {user && (
+              <motion.button
+                onClick={async () => {
+                  await logout();
+                  alert('You have been logged out. Please log in again.');
+                  navigate('/login');
+                }}
+                whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-red-600 text-white cursor:pointer px-6 py-3 rounded-lg font-semibold shadow-md"
+              >
+                Logout
+              </motion.button>
             )}
           </div>
 
@@ -116,6 +131,21 @@ export const Nav = () => {
                   >
                     Get Started
                   </Link>
+                )}
+                {user && (
+                  <motion.button
+                    onClick={async () => {
+                      setIsOpen(false);
+                      await logout();
+                      alert('You have been logged out. Please log in again.');
+                      navigate('/login');
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-red-600 text-white cursor:pointer px-6 py-3 rounded-lg font-semibold shadow-md"
+                  >
+                    Logout
+                  </motion.button>
                 )}
               </ul>
             </motion.div>

@@ -1,5 +1,5 @@
 import{  React, useState } from "react"; 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { Nav } from "../Home/Nav";
 
@@ -7,12 +7,14 @@ const SignUp = () => {
   const { signup } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); 
+   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       await signup(email, password);
-      alert("Signup successful! Welcome to SayNaira."); // ✅ Use alert not Alert
+      alert("Signup successful! Welcome to SayNaira."); 
+      navigate("/");
     } catch (err) {
       console.error("Signup failed:", err.message);
       alert("Signup failed: " + err.message);

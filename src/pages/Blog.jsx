@@ -99,15 +99,15 @@ export const Blog = () => {
             </div>
           </div>
         </div>
-        <div className="w-7xl mx-auto p-4 mt-20 relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-7xl mx-auto p-2 sm:p-4 mt-10 sm:mt-20 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {loading
               ? Array.from({ length: 6 }).map((_, idx) => (
                   <div
                     key={idx}
-                    className="bg-white border-gray-200 shadow-sm border rounded-xl p-5 animate-pulse"
+                    className="bg-white border-gray-200 shadow-sm border rounded-xl p-4 sm:p-5 animate-pulse min-h-[220px] flex flex-col justify-between"
                   >
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                       <span className="bg-green-100 h-5 w-16 rounded-full"></span>
                       <span className="bg-gray-200 h-4 w-12 rounded"></span>
                     </div>
@@ -120,10 +120,10 @@ export const Blog = () => {
               : filteredPosts.map((post) => (
                   <div
                     key={post.id}
-                    className="bg-white hover:border-green-200 border-gray-200 shadow-sm border rounded-xl p-5 transition-transform duration-300 ease-in-out   hover:shadow-lg hover:scale-105"
+                    className="bg-white hover:border-green-200 border-gray-200 shadow-sm border rounded-xl p-4 sm:p-5 transition-transform duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02] flex flex-col justify-between min-h-[220px]"
                   >
                     {/* Category + Read Time */}
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 flex-wrap">
                       <span className="bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
                         {post.category || "General"}
                       </span>
@@ -131,24 +131,24 @@ export const Blog = () => {
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                    <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 sm:mb-2 break-words">
                       {post.title}
                     </h2>
 
                     {/* Description */}
-                    <p className="text-sm text-gray-600 mb-4">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-4 break-words">
                       {post.content.slice(0, 100)}...
                     </p>
 
                     {/* Author + Date */}
-                    <div className="text-xs text-gray-500 mb-3">
-                      <span>By {post.authorEmail}</span> •{" "}
+                    <div className="text-xs text-gray-500 mb-2 sm:mb-3 flex flex-wrap gap-1">
+                      <span>By {post.authorEmail}</span> •
                       <span>{post.createdAt?.toDate().toLocaleDateString()}</span>
                     </div>
 
                     {/* Read More Button */}
-                    <button className="text-sm text-white bg-green-600 hover:bg-green-700 px-4 py-1.5 rounded-full">
-                      Read Article →
+                    <button className="text-xs sm:text-sm text-white bg-green-600 hover:bg-green-700 px-3 sm:px-4 py-1.5 rounded-full w-fit">
+                      Negotiate →
                     </button>
                   </div>
                 ))}
