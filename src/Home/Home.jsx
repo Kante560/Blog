@@ -32,10 +32,12 @@ const Home = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full min-h-screen mt-4 py-20 relative"
+        className="w-full min-h-screen mt-4 py-20 relative font-inter overflow-x-hidden overflow-visible"
       >
-        <div className="absolute hidden md:flex rounded-[50%] h-20 w-20 bg-green-100 left-[840px] top-[420px] "></div>
-        <div className="absolute hidden md:flex rounded-[50%] h-24 w-24 bg-green-100 left-[1330px] top-[200px] "></div>
+        {/* Responsive decorative circles, prevent overflow */}
+        <div className="absolute hidden md:flex rounded-[50%] h-20 w-20 bg-green-100 left-[60vw] top-[420px] pointer-events-none -z-10 overflow-hidden max-w-[100vw] max-h-[100vh]"></div>
+        <div className="absolute hidden md:flex rounded-[50%] h-24 w-24 bg-green-100 left-[80vw] top-[200px] pointer-events-none -z-10 overflow-hidden max-w-[100vw] max-h-[100vh]"></div>
+
         <div className="max-w-7xl mx-auto px-6 lg:flex lg:items-center lg:justify-between">
           <div className="lg:w-1/2">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
@@ -49,24 +51,17 @@ const Home = () => {
               every naira invested works harder for your business.
             </p>
 
-            <div className="mt-8 flex gap-4 items-center">
+            <div className="mt-8 flex gap-3 items-center">
               <Link to="/marketing">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-green-600 text-white cursor:pointer px-6 py-3 rounded-lg font-semibold shadow-md"
+                  className="bg-green-600 text-white cursor:pointer px-6 py-4     rounded-lg font-semibold shadow-md"
                 >
                   Start Your Journey
                 </motion.button>
-              </Link>x
-              <Link to="/marketing">
-                <a
-                  href="#"
-                  className="border border-green-600 text-green-600 px-6 py-3 rounded-md text-sm font-semibold hover:bg-green-50"
-                >
-                  View Our Work
-                </a>
               </Link>
+              
             </div>
 
             <div className="mt-12 grid grid-cols-3 gap-6 text-center">
