@@ -8,6 +8,7 @@ import { Blog } from "./pages/Blog";
 import { Contact } from "./pages/Contact";
 import { Marketing } from "./Home/Marketing";
 import { About } from "./Home/About";
+import { Chat }  from "./_component_/Chat";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/marketing" element={<Marketing />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/chat/:recipientId" element={<Chat />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
