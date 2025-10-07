@@ -90,7 +90,9 @@ export const Nav = () => {
               </>
             )}
             {/* Theme Toggle */}
-            <button
+
+            {user && (
+              <>  <button
               onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
               className="p-2 rounded-md border border-transparent hover:border-gray-300 dark:hover:border-gray-600"
               title={theme === "dark" ? "Switch to light" : "Switch to dark"}
@@ -101,6 +103,9 @@ export const Nav = () => {
                 <Moon className="w-5 h-5 text-gray-700" />
               )}
             </button>
+              </>
+            )}
+          
             {user && (
               <motion.button
                 onClick={async () => {
