@@ -91,9 +91,9 @@ export const Blog = () => {
     }
   };
 
-  const toggleChat = (postId) => {
-    setActiveChat(activeChat === postId ? null : postId);
-  };
+  // const toggleChat = (postId) => {
+  //   setActiveChat(activeChat === postId ? null : postId);
+  // };
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
@@ -220,12 +220,12 @@ export const Blog = () => {
                           Message Author 💬
                         </Link>
                       )}
-                      <button
+                      {/* <button
                         onClick={() => toggleChat(post.id)}
                         className="text-sm text-blue-600 hover:underline ml-auto"
                       >
                         {activeChat === post.id ? "Hide Chat 🔽" : "Show Chat 💬"}
-                      </button>
+                      </button> */}
                     </div>
 
                     {/* Real-time Chat Section */}

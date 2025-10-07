@@ -162,10 +162,10 @@ export const Chat = () => {
 
         {/* Messages Container */}
         <div
-          className="relative flex-1 overflow-y-auto p-4 space-y-3 bg-cover bg-center"
+          className="relative z-10 flex-1 overflow-y-auto p-4 space-y-3 bg-cover bg-center"
           style={{ backgroundImage: "url('/Dandadan.jpg')" }}
         >
-          <div className="absolute inset-0 bg-white/30 pointer-events-none" />
+          <div className="fixed inset-0 bg-white/30 dark:bg-black/30 pointer-events-none z-0" />
           {messages.length > 0 ? (
             messages.map((msg) => (
               <div
@@ -178,7 +178,7 @@ export const Chat = () => {
                   className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg shadow relative ${
                     msg.senderId === user.uid
                       ? "bg-green-600/90 text-white rounded-br-none"
-                      : "bg-white/90 text-gray-800 rounded-bl-none"
+                      : "bg-gray-800/90 text-gray-800 dark:text-gray-100 rounded-bl-none"
                   }`}
                 >
                   <p className="break-words">{msg.text}</p>
@@ -186,7 +186,7 @@ export const Chat = () => {
                     className={`text-xs mt-1 block ${
                       msg.senderId === user.uid
                         ? "text-green-100"
-                        : "text-gray-500"
+                        : "text-gray-500 dark:text-gray-400"
                     }`}
                   >
                     {formatTime(msg.timestamp)}
