@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { NotificationBell } from "../_component_/NotificationBell";
 
 export const Nav = () => {
   const { user, logout } = useAuth();
@@ -42,33 +44,48 @@ export const Nav = () => {
             <Link className="hover:text-green-600" to="/">
               Home
             </Link>
-            <Link to="/marketing" className="hover:text-green-600">
-              Service
-            </Link>
-            <Link to="/about" className="hover:text-green-600">
-              About
-            </Link>
+           
             <Link to="/blog" className="hover:text-green-600">
               Live Market
             </Link>
+            {user && (
+              <>
+                <Link
+                  to="/messages"
+                  className="relative hover:text-green-600 flex items-center gap-1"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Messages</span>
+                </Link>
+                <NotificationBell />
+              </>
+            )}
             {!user && (
+              <>
+               <Link to="/marketing" className="hover:text-green-600">
+               Service
+             </Link>
+             <Link to="/about" className="hover:text-green-600">
+               About
+             </Link>
               <Link
                 to="/signup"
                 className="py-2 px-4 bg-green-600 text-white rounded-lg"
               >
                 Get Started
               </Link>
+              </>
             )}
             {user && (
               <motion.button
                 onClick={async () => {
                   await logout();
-                  alert('You have been logged out. Please log in again.');
+                  toast.success('You have been logged out. Please log in again.');
                   navigate('/login');
                 }}
                 whileHover={{ scale: 1.15 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-red-600 text-white cursor:pointer px-6 py-3 rounded-lg font-semibold shadow-md"
+                  className="text-red-600 cursor:pointer rounded-lg font-semibold hover:underline"
               >
                 Logout
               </motion.button>
@@ -102,7 +119,27 @@ export const Nav = () => {
                 >
                   Home
                 </Link>
+                
                 <Link
+                  onClick={() => setIsOpen(false)}
+                  to="/blog"
+                  className="hover:text-green-600"
+                >
+                  Live Market
+                </Link>
+                {user && (
+                  <Link
+                    onClick={() => setIsOpen(false)}
+                    to="/messages"
+                    className="hover:text-green-600 flex items-center gap-2"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Messages
+                  </Link>
+                )}
+                {!user && (
+                  <>
+                  <Link
                   onClick={() => setIsOpen(false)}
                   to="/marketing"
                   className="hover:text-green-600"
@@ -116,14 +153,6 @@ export const Nav = () => {
                 >
                   About
                 </Link>
-                <Link
-                  onClick={() => setIsOpen(false)}
-                  to="/blog"
-                  className="hover:text-green-600"
-                >
-                  Live Market
-                </Link>
-                {!user && (
                   <Link
                     onClick={() => setIsOpen(false)}
                     to="/signup"
@@ -131,18 +160,19 @@ export const Nav = () => {
                   >
                     Get Started
                   </Link>
+                  </>
                 )}
                 {user && (
                   <motion.button
                     onClick={async () => {
                       setIsOpen(false);
                       await logout();
-                      alert('You have been logged out. Please log in again.');
+                      toast.success('You have been logged out. Please log in again.');
                       navigate('/login');
                     }}
                     whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-red-600 text-white cursor:pointer px-6 py-3 rounded-lg font-semibold shadow-md"
+                  className="bg-red-600 text-white cursor:pointer px-2 py-2 rounded-lg font-semibold shadow-md"
                   >
                     Logout
                   </motion.button>

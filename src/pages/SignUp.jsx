@@ -1,23 +1,29 @@
 import{  React, useState } from "react"; 
+import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { Nav } from "../Home/Nav";
 
 const SignUp = () => {
   const { signup } = useAuth();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); 
-   const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await signup(email, password);
-      alert("Signup successful! Welcome to SayNaira."); 
+      setLoading(true);
+      await signup(email, password, name);
+      toast.success("Signup successful! Welcome to SayNaira.");
       navigate("/");
     } catch (err) {
       console.error("Signup failed:", err.message);
-      alert("Signup failed: " + err.message);
+      toast.error(err.message || "Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,6 +47,9 @@ const SignUp = () => {
             type="text"
             id="name"
             name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:shadow-sm focus:shadow-green-500"
           />
         </div>
@@ -80,14 +89,15 @@ const SignUp = () => {
           type="submit"
           className="w-full py-3 rounded bg-green-600 text-white font-bold hover:bg-green-700 transition cursor:pointer"
         >
-          Sign Up
+          {loading ? "Loading..." : "Sign Up"}
         </button>
-        <Link
-          to="/Login"
-          className="text-blue-500 hover:underline block text-center hover:text-purple-800 mt-4 "
-        >
-          <p> I already have an account </p>
-        </Link>
+        
+       <p className="text-center mt-4 block " >I already have an account <span> <Link  to="/Login"
+          className="text-blue-500 hover:underline  hover:text-purple-800 "
+        > Login</Link></span> 
+
+           </p>
+       
       </form>
     </div>
     </>

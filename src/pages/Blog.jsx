@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import { db } from "../../firebase";
 import {
   collection,
@@ -23,6 +24,9 @@ export const Blog = () => {
   const [content, setContent] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [activeChat, setActiveChat] = useState(null);
+  const [chatMessages, setChatMessages] = useState({});
+  const [newMessage, setNewMessage] = useState("");
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -53,9 +57,50 @@ export const Blog = () => {
     fetchPosts();
   }, []);
 
+  // Real-time chat listener for active post
+  useEffect(() => {
+    if (!activeChat) return;
+
+    const messagesRef = collection(db, "posts", activeChat, "comments");
+    const q = query(messagesRef, orderBy("timestamp", "asc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const messages = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setChatMessages((prev) => ({ ...prev, [activeChat]: messages }));
+    });
+
+    return () => unsubscribe();
+  }, [activeChat]);
+
+  const sendComment = async (postId) => {
+    if (!newMessage.trim() || !user) return;
+
+    try {
+      await addDoc(collection(db, "posts", postId, "comments"), {
+        text: newMessage,
+        userId: user.uid,
+        userEmail: user.email,
+        timestamp: serverTimestamp(),
+      });
+      setNewMessage("");
+    } catch (err) {
+      console.error("Error sending comment:", err);
+    }
+  };
+
+  const toggleChat = (postId) => {
+    setActiveChat(activeChat === postId ? null : postId);
+  };
+
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !content) return alert("All fields are required");
+    if (!title || !content) {
+      toast.error("All fields are required");
+      return;
+    }
 
     try {
       await addDoc(collection(db, "posts"), {
@@ -68,10 +113,11 @@ export const Blog = () => {
       setTitle("");
       setContent("");
       setShowForm(false);
-      alert("Post added successfully");
+      toast.success("Post added successfully");
       fetchPosts();
     } catch (err) {
       console.error("Error adding post:", err);
+      toast.error("Failed to add post");
     }
   };
 
@@ -165,13 +211,77 @@ export const Blog = () => {
                       </span>
                     </div>
 
-                    {post.authorId !== user?.uid && (
-                      <Link
-                        to={`/chat/${post.authorId}`}
-                        className="mt-2 inline-block text-sm hover:underline"
+                    <div className="flex gap-2 mt-2">
+                      {post.authorId !== user?.uid && (
+                        <Link
+                          to={`/chat/${post.authorId}`}
+                          className="inline-block text-sm hover:underline text-green-600"
+                        >
+                          Message Author 💬
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => toggleChat(post.id)}
+                        className="text-sm text-blue-600 hover:underline ml-auto"
                       >
-                        Message Author 💬
-                      </Link>
+                        {activeChat === post.id ? "Hide Chat 🔽" : "Show Chat 💬"}
+                      </button>
+                    </div>
+
+                    {/* Real-time Chat Section */}
+                    {activeChat === post.id && (
+                      <div className="mt-4 border-t pt-3">
+                        <h3 className="text-sm font-semibold mb-2 text-gray-700">
+                          Live Discussion
+                        </h3>
+                        <div className="bg-gray-50 rounded p-2 mb-2 max-h-[200px] overflow-y-auto">
+                          {chatMessages[post.id]?.length > 0 ? (
+                            chatMessages[post.id].map((msg) => (
+                              <div
+                                key={msg.id}
+                                className={`mb-2 p-2 rounded text-xs ${
+                                  msg.userId === user?.uid
+                                    ? "bg-green-100 ml-4"
+                                    : "bg-white mr-4"
+                                }`}
+                              >
+                                <div className="font-semibold text-gray-700">
+                                  {msg.userEmail}
+                                </div>
+                                <div className="text-gray-600">{msg.text}</div>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-xs text-gray-400 text-center py-2">
+                              No messages yet. Start the conversation!
+                            </p>
+                          )}
+                        </div>
+                        {user ? (
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={newMessage}
+                              onChange={(e) => setNewMessage(e.target.value)}
+                              onKeyPress={(e) =>
+                                e.key === "Enter" && sendComment(post.id)
+                              }
+                              placeholder="Type a message..."
+                              className="flex-1 text-xs p-2 border rounded focus:outline-none focus:border-green-500"
+                            />
+                            <button
+                              onClick={() => sendComment(post.id)}
+                              className="bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700"
+                            >
+                              Send
+                            </button>
+                          </div>
+                        ) : (
+                          <p className="text-xs text-gray-500 text-center">
+                            Please log in to join the discussion
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                 ))}

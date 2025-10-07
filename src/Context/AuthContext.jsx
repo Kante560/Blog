@@ -6,7 +6,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth, db } from "../../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -14,8 +14,19 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signup = async (email, password, name) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    
+    // Create user document in Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
+      uid: user.uid,
+      name: name || "",
+      createdAt: serverTimestamp(),
+    });
+    
+    return userCredential;
   };
 
   const login = (email, password) => {
@@ -33,7 +44,11 @@ export const AuthProvider = ({ children }) => {
     const userStatusRef = doc(db, "status", currentUser.uid);
 
     // Mark online immediately
-    await setDoc(userStatusRef, { state: "online", email: currentUser.email }, { merge: true });
+    await setDoc(
+      userStatusRef,
+      { state: "online", email: currentUser.email },
+      { merge: true }
+    );
 
     // Handle when user closes tab or refreshes
     const handleUnload = async () => {
