@@ -191,7 +191,7 @@ export const About = () => {
                   exceptional results.
                 </p>
 
-                <Link to="/teams">
+                <Link to="/signup">
                   <button className="py-4 px-6 mt-4 text-[16px] bg-green-600 text-white font-semibold rounded-lg  transition duration-300 flex items-center space-x-2 cursor-pointer ">
                     View Team Profiles
                   </button>

@@ -223,18 +223,18 @@ export const Marketing = () => {
               </div>
             </ul>
 
-            <a
-              href="#"
+            <Link
+              to="/signup"
               className="group inline-flex items-center text-green-600 group-hover:underline"
             >
               Learn more
               <ArrowRight className="w-[25px] ml-1 transition-transform duration-200 group-hover:translate-x-1 h-[14px] stroke-[1.2]" />
-            </a>
+            </Link>
           </div>
         </div>
 
         <div className=" flex justify-center items-center mb-8 w-full  mt-4 bg-transparent ">
-          <div className=" text-center py-6 w-[1222px] bg-gradient-to-r from-green-600 to-green-700 rounded-[19px] linear flex justify-center items-center flex-col mt-10 mb-6">
+          <div className=" text-center py-6 w-full bg-gradient-to-r from-green-600 to-green-700 rounded-none linear flex justify-center items-center flex-col mt-10 mb-6">
             <h1 className=" text-white font-bold text-[30px] mb-5">
               Ready to Transform Your Marketing?
             </h1>
@@ -243,7 +243,7 @@ export const Marketing = () => {
               grow and succeed in today's competitive market.
             </p>
 
-            <Link to="/Consultations">
+            <Link to="/signup">
               <button className="py-4 px-6 mt-4 text-[20px] bg-white text-green-600 font-semibold rounded-lg  transition duration-300 flex items-center space-x-2 cursor-pointer ">
                 Get Free Consultation
               </button>
