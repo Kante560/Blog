@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 
 export  const SearchBar = ({ value, onChange, placeholder = "Search articles, strategies, tips..." }) => {
   return (
-    <div className="relative w-full max-w-md mx-auto">
+    <div className="relative mb-4 w-full max-w-md mx-auto">
       <input
         type="text"
         value={value}

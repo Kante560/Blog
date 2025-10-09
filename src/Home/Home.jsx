@@ -42,7 +42,7 @@ const Home = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         {user && (
-          <div className="container mx-auto px-4 lg:px-8 py-8 space-y-8 text-gray-900 dark:text-gray-100">
+          <div className="container mt-[10rem] mx-auto px-4 lg:px-8 py-8 space-y-8 text-gray-900">
             {/* User Search */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -54,7 +54,7 @@ const Home = () => {
                 placeholder="Search users by name or email..."
               />
               {searchQuery && (
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4">
+                <div className="bg-white rounded-xl shadow-md p-4">
                   <h3 className="text-sm font-semibold text-gray-700 mb-3">Results</h3>
                   <ul className="divide-y">
                     {allUsers
@@ -66,14 +66,14 @@ const Home = () => {
                       .map((u) => (
                         <li key={u.id} className="py-3 flex items-center justify-between gap-3">
                           <div className="flex items-center gap-3 min-w-0">
-                            <div className="w-10 h-10 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center text-green-600 font-semibold">
+                            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-semibold">
                               {(u.name || u.displayName || u.email || "?")
                                 .charAt(0)
                                 .toUpperCase()}
                             </div>
                             <div className="min-w-0">
-                              <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{u.name || u.displayName || "Unnamed"}</p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{u.email || "No email"}</p>
+                              <p className="text-sm font-medium text-gray-900 truncate">{u.name || u.displayName || "Unnamed"}</p>
+                              <p className="text-xs text-gray-500 truncate">{u.email || "No email"}</p>
                             </div>
                           </div>
                           <Link
@@ -101,9 +101,9 @@ const Home = () => {
                 { label: "Spend", value: "$1,240" },
                 { label: "Conversions", value: "612" },
               ].map((kpi) => (
-                <div key={kpi.label} className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{kpi.label}</p>
-                  <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mt-1">{kpi.value}</p>
+                <div key={kpi.label} className="bg-white rounded-xl shadow-md p-4">
+                  <p className="text-sm text-gray-500">{kpi.label}</p>
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">{kpi.value}</p>
                 </div>
               ))}
             </div>
@@ -113,30 +113,30 @@ const Home = () => {
               {/* Left: Chart + Activity */}
               <div className="lg:col-span-2 space-y-6">
                 {/* Campaign Performance */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5">
+                <div className="bg-white rounded-xl shadow-md p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Campaign Performance</h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                      <button className="px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">7d</button>
-                      <button className="px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-700">30d</button>
-                      <button className="px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">90d</button>
+                    <h3 className="font-semibold text-gray-900">Campaign Performance</h3>
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <button className="px-2 py-1 rounded-md hover:bg-gray-100">7d</button>
+                      <button className="px-2 py-1 rounded-md bg-gray-100">30d</button>
+                      <button className="px-2 py-1 rounded-md hover:bg-gray-100">90d</button>
                     </div>
                   </div>
-                  <div className="h-52 grid place-items-center text-gray-400 dark:text-gray-500">
+                  <div className="h-52 grid place-items-center text-gray-400">
                     <span>Chart placeholder</span>
                   </div>
                 </div>
 
                 {/* Recent Activity */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Recent Activity</h3>
+                <div className="bg-white rounded-xl shadow-md p-5">
+                  <h3 className="font-semibold text-gray-900 mb-3">Recent Activity</h3>
                   <ul className="divide-y">
                     {[
                       "Budget increased on Campaign A (+$200)",
                       "Creative updated on Campaign B",
                       "New audience created: Tech Enthusiasts",
                     ].map((item, idx) => (
-                      <li key={idx} className="py-3 text-sm text-gray-700 dark:text-gray-300">{item}</li>
+                      <li key={idx} className="py-3 text-sm text-gray-700">{item}</li>
                     ))}
                   </ul>
                 </div>
@@ -145,8 +145,8 @@ const Home = () => {
               {/* Right: Actions + Inbox + Segments */}
               <div className="space-y-6">
                 {/* Quick Actions */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Quick Actions</h3>
+                <div className="bg-white rounded-xl shadow-md p-5">
+                  <h3 className="font-semibold text-gray-900 mb-3">Quick Actions</h3>
                   <div className="grid grid-cols-2 gap-3">
                     {["New Campaign", "Boost Post", "Create Audience", "Import Contacts"].map((a) => (
                       <button
@@ -161,9 +161,9 @@ const Home = () => {
                 </div>
 
                 {/* Inbox Preview */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5">
+                <div className="bg-white rounded-xl shadow-md p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Inbox</h3>
+                    <h3 className="font-semibold text-gray-900">Inbox</h3>
                     <Link to="/messages" className="text-sm text-indigo-600 hover:underline">Open</Link>
                   </div>
                   <ul className="space-y-3">
@@ -172,24 +172,24 @@ const Home = () => {
                       { name: "Dele", msg: "New lead from landing page." },
                     ].map((m, i) => (
                       <li key={i} className="text-sm">
-                        <p className="font-medium text-gray-800 dark:text-gray-200">{m.name}</p>
-                        <p className="text-gray-500 dark:text-gray-400 truncate">{m.msg}</p>
+                        <p className="font-medium text-gray-800">{m.name}</p>
+                        <p className="text-gray-500 truncate">{m.msg}</p>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Audience Segments */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Top Segments</h3>
+                <div className="bg-white rounded-xl shadow-md p-5">
+                  <h3 className="font-semibold text-gray-900 mb-3">Top Segments</h3>
                   <div className="space-y-3">
                     {[
                       { name: "Tech Enthusiasts", size: "24.1k", growth: "+8%" },
                       { name: "Fashion Lovers", size: "12.7k", growth: "+3%" },
                     ].map((s, idx) => (
                       <div key={idx} className="flex items-center justify-between text-sm">
-                        <span className="text-gray-800 dark:text-gray-200">{s.name}</span>
-                        <span className="text-gray-500 dark:text-gray-400">{s.size}</span>
+                        <span className="text-gray-800">{s.name}</span>
+                        <span className="text-gray-500">{s.size}</span>
                         <span className="text-green-600">{s.growth}</span>
                       </div>
                     ))}
